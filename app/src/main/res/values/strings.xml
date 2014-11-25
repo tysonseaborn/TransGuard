@@ -4,6 +4,7 @@
     <string name="app_name">Trans Guard</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_trans_guard_main_menu">Main Menu</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_trans_guard_past_transactions">Trans Guard Past Transactions List</string>
+    <string name="title_activity_trans_guard_past_transaction">Trans Guard Past Transaction</string>
 
 </resources>

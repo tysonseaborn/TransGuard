@@ -51,12 +51,12 @@
             android:layout_width="300dp"
             android:layout_height="75dp"
             android:text="Past Transactions"
-            android:id="@+id/button2"
+            android:id="@+id/buttonPastTrans"
             android:layout_marginLeft="25dp"
             android:textSize="25dp"
             android:textColor="#FFFFFF"
             android:typeface="serif"
             android:background="@drawable/buttonshape"
-            />
+            android:onClick="onButtonClick" />
     </LinearLayout>
 </RelativeLayout>

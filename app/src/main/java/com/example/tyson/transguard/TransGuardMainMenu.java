@@ -1,6 +1,7 @@
 package com.example.tyson.transguard;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -67,6 +68,13 @@ public class TransGuardMainMenu extends Activity {
 
                 // make sure you close the gps after using it. Save user's battery power
                 mGPSService.closeGPS();
+
+                break;
+
+            case R.id.buttonPastTrans:
+                Intent iPastTrans = new Intent(this, TransGuardPastTransactionList.class);
+                startActivity(iPastTrans);
+                break;
         }
     }
 }

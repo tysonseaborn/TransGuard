@@ -24,7 +24,16 @@
             android:name=".TransGuardMainMenu"
             android:label="@string/title_activity_trans_guard_main_menu" >
         </activity>
+        <activity
+            android:name=".TransGuardPastTransactionList"
+            android:label="@string/title_activity_trans_guard_past_transactions" >
+        </activity>
+        <activity
+            android:name=".TransGuardPastTransaction"
+            android:label="@string/title_activity_trans_guard_past_transaction" >
+        </activity>
     </application>
-    <uses-library android:name="com.google.android.maps"/>
+
+    <uses-library android:name="com.google.android.maps" />
 
 </manifest>

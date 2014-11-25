@@ -1,32 +1,24 @@
 package com.example.tyson.transguard;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 
-public class TransGuard extends Activity {
-
-    EditText etUsername, etPassword;
+public class TransGuardPastTransaction extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trans_guard);
-        etUsername = (EditText)findViewById(R.id.usernameInput);
-        etPassword = (EditText)findViewById(R.id.passwordInput);
+        setContentView(R.layout.activity_trans_guard_past_transaction);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.trans_guard, menu);
+        getMenuInflater().inflate(R.menu.trans_guard_past_transaction, menu);
         return true;
     }
 
@@ -40,14 +32,5 @@ public class TransGuard extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void onButtonClick(View view) {
-        switch(view.getId()) {
-            case R.id.buttonSignin:
-                Intent iLogin = new Intent(this, TransGuardMainMenu.class);
-                startActivity(iLogin);
-                break;
-        }
     }
 }
