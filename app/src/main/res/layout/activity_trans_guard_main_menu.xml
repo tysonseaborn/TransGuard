@@ -19,6 +19,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Welcome"
             android:id="@+id/textView"
+            android:textSize="30dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="25dp" />
 
@@ -28,6 +29,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/textViewWelcomeUser"
             android:layout_gravity="center_horizontal"
+            android:textSize="25dp"
             android:text="User" />
 
         <Button
@@ -38,8 +40,12 @@
             android:layout_marginTop="100dp"
             android:layout_marginBottom="50dp"
             android:layout_marginLeft="25dp"
+            android:textSize="25dp"
             android:textColor="#FFFFFF"
-            android:onClick="onButtonClick" />
+            android:typeface="serif"
+            android:onClick="onButtonClick"
+            android:background="@drawable/buttonshape"
+            />
 
         <Button
             android:layout_width="300dp"
@@ -47,6 +53,10 @@
             android:text="Past Transactions"
             android:id="@+id/button2"
             android:layout_marginLeft="25dp"
-            android:textColor="#FFFFFF" />
+            android:textSize="25dp"
+            android:textColor="#FFFFFF"
+            android:typeface="serif"
+            android:background="@drawable/buttonshape"
+            />
     </LinearLayout>
 </RelativeLayout>
