@@ -1,17 +1,25 @@
 package com.example.tyson.transguard;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class TransGuard extends Activity {
+
+    EditText etUsername, etPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trans_guard);
+        etUsername = (EditText)findViewById(R.id.usernameInput);
+        etPassword = (EditText)findViewById(R.id.passwordInput);
     }
 
 
@@ -32,5 +40,22 @@ public class TransGuard extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onButtonClick(View view) {
+        switch(view.getId()) {
+            case R.id.buttonSignin:
+                if(etUsername.getText().toString().equals("Client") && etPassword.getText().toString().equals("password")) {
+                    Intent iLogin = new Intent(this,TransGuardMainMenu.class);
+                    String sUsername = etUsername.getText().toString().trim();
+                    iLogin.putExtra("username", sUsername);
+
+                    startActivity(iLogin);
+                }
+                else
+                    Toast.makeText(this, "Incorrect Login", Toast.LENGTH_LONG );
+
+                break;
+        }
     }
 }
