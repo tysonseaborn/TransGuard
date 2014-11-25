@@ -32,13 +32,15 @@
         android:layout_alignStart="@+id/usernameInput" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:id="@+id/imageViewMainMenu"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/trackatrailbanner"
-        android:alpha="100" />
+        android:background="@drawable/tg_logo"
+        android:alpha="100"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp" />
 
     <Button
         android:layout_width="wrap_content"

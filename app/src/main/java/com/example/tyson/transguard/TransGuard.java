@@ -45,16 +45,8 @@ public class TransGuard extends Activity {
     public void onButtonClick(View view) {
         switch(view.getId()) {
             case R.id.buttonSignin:
-                if(etUsername.getText().toString().equals("Client") && etPassword.getText().toString().equals("password")) {
-                    Intent iLogin = new Intent(this,TransGuardMainMenu.class);
-                    String sUsername = etUsername.getText().toString().trim();
-                    iLogin.putExtra("username", sUsername);
-
-                    startActivity(iLogin);
-                }
-                else
-                    Toast.makeText(this, "Incorrect Login", Toast.LENGTH_LONG );
-
+                Intent iLogin = new Intent(this,TransGuardMainMenu.class);
+                startActivity(iLogin);
                 break;
         }
     }
