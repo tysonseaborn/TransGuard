@@ -8,8 +8,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-
 public class TransGuardMainMenu extends Activity {
+    //GoogleCloudMessaging gcm;
+    String regID;
+    String PROJECT_NUMBER = "492813484993";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

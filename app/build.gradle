@@ -22,3 +22,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
+
+dependencies {
+    compile "com.google.android.gms:play-services:3.1.+"
+}
