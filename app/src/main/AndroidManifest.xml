@@ -20,7 +20,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".TransGuard"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,12 +30,23 @@
         </activity>
         <activity
             android:name=".TransGuardMainMenu"
-            android:label="@string/title_activity_trans_guard_main_menu" >
+            android:label="@string/title_activity_trans_guard_main_menu"
+            android:screenOrientation="portrait" >
         </activity>
-
         <activity
             android:name=".TransGuardPastTransactionList"
-            android:label="@string/title_activity_trans_guard_past_transaction" >
+            android:label="@string/title_activity_trans_guard_past_transaction_list"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".TransGuardPastTransaction"
+            android:label="@string/title_activity_trans_guard_past_transaction"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".TransGuardPastTransactionSecondList"
+            android:label="@string/title_activity_trans_guard_past_transaction_second_list"
+            android:screenOrientation="portrait" >
         </activity>
 
         <receiver
@@ -54,8 +66,8 @@
             android:value="21" />
 
         <activity
-            android:name=".TransGuardPastTransactionSecondList"
-            android:label="@string/title_activity_trans_guard_past_transaction_second_list" >
+            android:name=".About"
+            android:label="@string/title_activity_about" >
         </activity>
     </application>
 

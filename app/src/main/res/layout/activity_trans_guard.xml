@@ -14,20 +14,20 @@
         android:layout_height="fill_parent">
 
         <ImageView
-            android:layout_width="300dp"
-            android:layout_height="65dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/imageViewMainMenu"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:background="@drawable/tg_banner"
             android:alpha="100"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="0dp"
             android:layout_marginBottom="50dp" />
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/usernameInput"
@@ -35,11 +35,14 @@
             android:gravity="center"
             android:layout_above="@+id/passwordInput"
             android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:textColor="@color/white"
+            android:textStyle="italic" />
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/passwordInput"
@@ -48,25 +51,37 @@
             android:layout_above="@+id/imageViewMainMenu"
             android:layout_alignLeft="@+id/usernameInput"
             android:layout_alignStart="@+id/usernameInput"
-            android:layout_gravity="center_horizontal" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sign in"
-            android:id="@+id/buttonSignin"
-            android:onClick="onButtonClick"
-            android:layout_below="@+id/imageViewMainMenu"
-            android:layout_alignRight="@+id/passwordInput"
-            android:layout_alignEnd="@+id/passwordInput"
-            android:layout_alignLeft="@+id/passwordInput"
-            android:layout_alignStart="@+id/passwordInput"
-            android:textSize="25dp"
-            android:textColor="#FFFFFF"
-            android:typeface="serif"
-            android:background="@drawable/buttonshape"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp" />
+            android:textColor="@color/white"
+            android:textStyle="italic" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="100dp">
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Sign in"
+                android:id="@+id/buttonSignin"
+                android:onClick="onButtonClick"
+                android:layout_below="@+id/imageViewMainMenu"
+                android:layout_alignRight="@+id/passwordInput"
+                android:layout_alignEnd="@+id/passwordInput"
+                android:layout_alignLeft="@+id/passwordInput"
+                android:layout_alignStart="@+id/passwordInput"
+                android:textSize="30dp"
+                android:textColor="#FFFFFF"
+                android:typeface="serif"
+                android:background="@drawable/buttonshape"
+                android:layout_gravity="center_horizontal"
+                android:shadowColor="#000000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="25"/>
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

@@ -1,17 +1,58 @@
 package com.example.tyson.transguard;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
-public class TransGuardPastTransaction extends Activity {
+public class TransGuardPastTransaction extends TransGuard {
+
+    TextView tvName, tvDate, tvAmount;
+    String name, date, amount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trans_guard_past_transaction);
+
+        name = getIntent().getExtras().getString("name");
+        date = getIntent().getExtras().getString("date");
+        amount = getIntent().getExtras().getString("amount");
+
+        tvName = (TextView)findViewById(R.id.textViewName);
+        tvDate = (TextView)findViewById(R.id.textViewDate);
+        tvAmount = (TextView)findViewById(R.id.textViewAmount);
+
+        Date newDate;
+        String newDateStr = null;
+        int newAmount;
+        String stringAmount;
+
+        try {
+            newDate = new SimpleDateFormat("0yyyyMMdd").parse(date);
+            SimpleDateFormat postFormater = new SimpleDateFormat("EEEE, MMMM dd, yyyy");
+            newDateStr = postFormater.format(newDate);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        newAmount = Integer.parseInt(amount);
+        stringAmount = '$' + String.valueOf(newAmount);
+
+        tvName.setText(name);
+        tvDate.setText(newDateStr);
+        tvAmount.setText(stringAmount);
+
+
     }
 
 
@@ -28,9 +69,18 @@ public class TransGuardPastTransaction extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_about) {
+            openMenu("about");
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // Open the selected menu item
+    public void openMenu(String menuItem) {
+        if(menuItem.equals("about")) {
+            Intent about = new Intent(this, About.class);
+            startActivity(about);
+        }
     }
 }

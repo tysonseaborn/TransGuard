@@ -17,16 +17,57 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Name"
+            android:id="@+id/textViewNameLabel"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Name Value"
+            android:id="@+id/textViewName"
+            android:layout_gravity="center_horizontal"
+            android:typeface="serif" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Date"
             android:id="@+id/textViewDateLabel"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:textStyle="italic" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Date Value"
-            android:id="@+id/textViewDateValue"
-            android:layout_gravity="center_horizontal" />
+            android:id="@+id/textViewDate"
+            android:layout_gravity="center_horizontal"
+            android:typeface="serif" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Amount"
+            android:id="@+id/textViewAmountLabel"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Amount Value"
+            android:id="@+id/textViewAmount"
+            android:layout_gravity="center_horizontal"
+            android:typeface="serif" />
     </LinearLayout>
 </RelativeLayout>

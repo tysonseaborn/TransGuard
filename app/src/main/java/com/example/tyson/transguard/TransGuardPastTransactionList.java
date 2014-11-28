@@ -2,6 +2,7 @@ package com.example.tyson.transguard;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,19 +14,29 @@ import android.widget.ListView;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
-public class TransGuardPastTransactionList extends Activity {
+public class TransGuardPastTransactionList extends TransGuard {
 
     ListView lv;
     List<String> listArray;
 
     // Instantiate the parser
     XMLParser xmlParser = new XMLParser();
-    InputStream inputStream = null;
+    //InputStream inputStream = null;
     List<XMLParser.Entry> entries = null;
+
+    AssetManager am;
+    InputStream is;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +44,19 @@ public class TransGuardPastTransactionList extends Activity {
         setContentView(R.layout.activity_trans_guard_past_transaction_list);
 
         try {
-            inputStream = new FileInputStream("C:/Users/Tyson/Desktop/xmlTestFile.xml");
-            entries = xmlParser.parse(inputStream);
+
+            am = getBaseContext().getAssets();
+            is = am.open("xmlTestFile.xml");
+            //is = new FileInputStream("C:/Users/Tyson/Desktop/xmlTestFile.xml");
+            entries = xmlParser.parse(is);
 
 
             listArray =  new ArrayList<String>();
 
             for (XMLParser.Entry entry : entries) {
-                listArray.add(entry.name);
+                if(entry.date != null && !listArray.contains(getMonth(entry.date) + ' ' + getYear(entry.date))) {
+                    listArray.add(getMonth(entry.date) + ' ' + getYear(entry.date));
+                }
             }
 
 //            listArray.add("August");
@@ -56,8 +72,44 @@ public class TransGuardPastTransactionList extends Activity {
                 public void onItemClick(AdapterView<?> parent, View view, int position,
                                         long id) {
                     Intent intent = new Intent(TransGuardPastTransactionList.this, TransGuardPastTransactionSecondList.class);
-                    String dateValue = lv.getItemAtPosition(position).toString();
-                    intent.putExtra("routeName", dateValue);
+                    //String nameValue = lv.getItemAtPosition(position).toString();
+//                    String date;
+//                    String name;
+//                    String amount;
+                    String month;
+                    int monthNumber;
+                    String[] values;
+
+                    XMLParser.Entry entry = entries.get(position);
+//                    date = entry.date;
+//                    name = entry.name;
+//                    amount = entry.amount;
+                    month = lv.getItemAtPosition(position).toString();
+                    values = month.split(" ");
+
+                    Date date = null;
+                    try {
+                        date = new SimpleDateFormat("MMMM").parse(values[0]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(date);
+                    monthNumber = cal.get(Calendar.MONTH);
+                    monthNumber += 1;
+                    month = Integer.toString(monthNumber);
+
+
+//                    for(XMLParser.Entry entry : entries) {
+//                        if(position == )
+//
+//                        }
+//                    }
+
+//                    intent.putExtra("date", date);
+//                    intent.putExtra("name", name);
+//                    intent.putExtra("amount", amount);
+                    intent.putExtra("month", month);
                     startActivity(intent);
                 }
 
@@ -70,9 +122,9 @@ public class TransGuardPastTransactionList extends Activity {
         }finally{
 
             // releases system resources associated with this stream
-            if(inputStream != null) {
+            if(is != null) {
                 try {
-                    inputStream.close();
+                    is.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -94,9 +146,32 @@ public class TransGuardPastTransactionList extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_about) {
+            openMenu("about");
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // Open the selected menu item
+    public void openMenu(String menuItem) {
+        if(menuItem.equals("about")) {
+            Intent about = new Intent(this, About.class);
+            startActivity(about);
+        }
+    }
+
+    public String getMonth(String date){
+        int month;
+        String newDate;
+        newDate = date.substring(5, 7);
+        month = Integer.parseInt(newDate);
+        return new DateFormatSymbols().getMonths()[month-1];
+    }
+
+    public String getYear(String date) {
+        String newDate;
+        newDate = date.substring(1, 5);
+        return newDate;
     }
 }

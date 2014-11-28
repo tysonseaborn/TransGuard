@@ -19,44 +19,54 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Welcome"
             android:id="@+id/textView"
-            android:textSize="30dp"
+            android:textSize="40dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp" />
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="100dp"
+            android:textStyle="bold|italic"
+            android:typeface="serif" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/textViewWelcomeUser"
-            android:layout_gravity="center_horizontal"
-            android:textSize="25dp"
-            android:text="User" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="100dp">
 
-        <Button
-            android:layout_width="300dp"
-            android:layout_height="75dp"
-            android:text="Check In"
-            android:id="@+id/buttonCheckIn"
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="50dp"
-            android:layout_marginLeft="25dp"
-            android:textSize="25dp"
-            android:textColor="#FFFFFF"
-            android:typeface="serif"
-            android:onClick="onButtonClick"
-            android:background="@drawable/buttonshape"
-            />
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Check In"
+                android:id="@+id/buttonCheckIn"
+                android:textSize="22dp"
+                android:textColor="#FFFFFF"
+                android:typeface="serif"
+                android:onClick="onButtonClick"
+                android:background="@drawable/buttonshape"
+                android:layout_weight="1"
+                android:layout_marginBottom="15dp"
+                android:shadowColor="#000000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="25"/>
 
-        <Button
-            android:layout_width="300dp"
-            android:layout_height="75dp"
-            android:text="Past Transactions"
-            android:id="@+id/buttonPastTrans"
-            android:layout_marginLeft="25dp"
-            android:textSize="25dp"
-            android:textColor="#FFFFFF"
-            android:typeface="serif"
-            android:background="@drawable/buttonshape"
-            android:onClick="onButtonClick" />
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Past&#10;Transactions"
+                android:id="@+id/buttonPastTrans"
+                android:textSize="22dp"
+                android:textColor="#FFFFFF"
+                android:typeface="serif"
+                android:background="@drawable/buttonshape"
+                android:onClick="onButtonClick"
+                android:layout_weight="1"
+                android:layout_marginTop="15dp"
+                android:shadowColor="#000000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="25"/>
+        </LinearLayout>
+
     </LinearLayout>
+
 </RelativeLayout>

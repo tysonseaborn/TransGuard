@@ -28,7 +28,33 @@ public class XMLParser {
         }
     }
 
-    private Entry readEntry(XmlPullParser parser) throws XmlPullParserException, IOException {
+    private List readEntry(XmlPullParser parser) throws XmlPullParserException, IOException {
+        List entries = new ArrayList();
+        parser.require(XmlPullParser.START_TAG, ns, "BLN-GRP-TAG2");
+//        String date = null;
+//        String amount = null;
+//        String name = null;
+        while (parser.next() != XmlPullParser.END_TAG) {
+            if (parser.getEventType() != XmlPullParser.START_TAG) {
+                continue;
+            }
+            String text = parser.getName();
+            if (text.equals("BLN-GRP-TAG2-ROW")) {
+                entries.add(readInnerEntry(parser));
+//            } else if (text.equals("BKI-TXN-DESC")) {
+//                name = readName(parser);
+//            } else if (text.equals("BKI-TXN-AMT")) {
+//                amount = readAmount(parser);
+            } else {
+                skip(parser);
+            }
+        }
+        return entries;
+        //return new Entry(date, amount, name);
+    }
+
+    private Entry readInnerEntry(XmlPullParser parser) throws XmlPullParserException, IOException {
+        //List entries = new ArrayList();
         parser.require(XmlPullParser.START_TAG, ns, "BLN-GRP-TAG2-ROW");
         String date = null;
         String amount = null;
@@ -48,7 +74,8 @@ public class XMLParser {
                 skip(parser);
             }
         }
-        return new Entry(date, amount, name);
+        //return entries;
+        return new Entry(date, name, amount);
     }
 
     // Processes title tags in the feed.
@@ -125,8 +152,8 @@ public class XMLParser {
             }
             String name = parser.getName();
             // Starts by looking for the entry tag
-            if (name.equals("BLN-GRP-TAG2-ROW")) {
-                entries.add(readEntry(parser));
+            if (name.equals("BLN-GRP-TAG2")) {
+                entries = readEntry(parser);
             } else {
                 skip(parser);
             }

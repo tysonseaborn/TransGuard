@@ -36,10 +36,18 @@ public class TransGuard extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_about) {
+            openMenu("about");
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void openMenu(String menuItem) {
+        if(menuItem.equals("about")) {
+            Intent about = new Intent(this, About.class);
+            startActivity(about);
+        }
     }
 
     public void onButtonClick(View view) {
