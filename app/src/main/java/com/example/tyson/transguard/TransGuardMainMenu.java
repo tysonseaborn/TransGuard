@@ -1,8 +1,14 @@
 package com.example.tyson.transguard;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,7 +67,7 @@ public class TransGuardMainMenu extends TransGuard {
 
                     // Here you can ask the user to try again, using return; for that
                     Toast.makeText(getBaseContext(), "Your location is not available, please try again.", Toast.LENGTH_SHORT).show();
-                    return;
+                    //return;
 
                     // Or you can continue without getting the location, remove the return; above and uncomment the line given below
                     // address = "Location not available";
@@ -79,6 +85,42 @@ public class TransGuardMainMenu extends TransGuard {
 
                 // make sure you close the gps after using it. Save user's battery power
                 mGPSService.closeGPS();
+
+                // Notification!!!
+                int mId = 0;
+                Context context = getApplicationContext();
+                Intent resultIntent = new Intent(Intent.ACTION_MAIN);
+                resultIntent.setClass(getApplicationContext(), TransGuard.class);
+
+                NotificationCompat.Builder mBuilder =
+                        new NotificationCompat.Builder(this)
+                                .setSmallIcon(R.drawable.tg_logo_small)
+                                .setAutoCancel(true)
+                                .setContentTitle("TransGuard")
+                                .setContentText("You should check in!")
+                                .setContentIntent(PendingIntent.getActivity(this, 0, resultIntent, 0));
+                ;
+                // Creates an explicit intent for an Activity in your app
+
+                // The stack builder object will contain an artificial back stack for the
+                // started Activity.
+                // This ensures that navigating backward from the Activity leads out of
+                // your application to the Home screen.
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+                // Adds the back stack for the Intent (but not the Intent itself)
+                stackBuilder.addParentStack(TransGuard.class);
+                // Adds the Intent that starts the Activity to the top of the stack
+                stackBuilder.addNextIntent(resultIntent);
+
+                PendingIntent resultPendingIntent =
+                        PendingIntent.getActivity(context, 0,
+                                resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                mBuilder.setContentIntent(resultPendingIntent);
+                NotificationManager mNotificationManager =
+                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                // mId allows you to update the notification later on.
+                mNotificationManager.notify(mId, mBuilder.build());
 
                 break;
 
