@@ -45,6 +45,5 @@ public class GcmMessageHandler extends IntentService {
                 Toast.makeText(getApplicationContext(),mes , Toast.LENGTH_LONG).show();
             }
         });
-
     }
 }
