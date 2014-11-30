@@ -35,6 +35,11 @@ public class TransGuardMainMenu extends TransGuard {
     public static String regID;
     String PROJECT_NUMBER = "492813484993";
 
+    public static String rName;
+    public static String rDate;
+    public static String rAmount;
+    public static boolean isTrans = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +88,11 @@ public class TransGuardMainMenu extends TransGuard {
         newFragment.show(getFragmentManager(), "checkin");
     }
 
+    public void transactionCheckIn() {
+        DialogFragment newFragment = new TransactionFragment();
+        newFragment.show(getFragmentManager(), "transaction");
+    }
+
 
     public void onButtonClick(View view) {
 
@@ -98,22 +108,28 @@ public class TransGuardMainMenu extends TransGuard {
                     // Here you can ask the user to try again, using return; for that
                     Toast.makeText(getBaseContext(), "Your location is not available. Please make sure you have location services enabled.", Toast.LENGTH_SHORT).show();
                     //return;
-
-                    // Popup!
-                    confirmCheckIn();
+                    transactionCheckIn();
+                    if (isTrans = true) {
+                        // Popup!
+                        confirmCheckIn();
+                        isTrans = false;
+                    }
 
                     // Or you can continue without getting the location, remove the return; above and uncomment the line given below
                     // address = "Location not available";
                 } else {
-
-                    // Getting location co-ordinates
-                    double latitude = mGPSService.getLatitude();
-                    double longitude = mGPSService.getLongitude();
-                    Toast.makeText(getBaseContext(), "Latitude:" + latitude + " | Longitude: " + longitude, Toast.LENGTH_LONG).show();
-                    Content content = createContent();
-                    content.createCoords(Double.toString(latitude), Double.toString(longitude));
-                    post(apiKey, content);
-                    //address = mGPSService.getLocationAddress();
+                    transactionCheckIn();
+                    if (isTrans = true) {
+                        // Getting location co-ordinates
+                        double latitude = mGPSService.getLatitude();
+                        double longitude = mGPSService.getLongitude();
+                        Toast.makeText(getBaseContext(), "Latitude:" + latitude + " | Longitude: " + longitude, Toast.LENGTH_LONG).show();
+                        Content content = createContent();
+                        content.createCoords(Double.toString(latitude), Double.toString(longitude));
+                        post(apiKey, content);
+                        //address = mGPSService.getLocationAddress();
+                        isTrans = false;
+                    }
                 }
 
                 //Toast.makeText(getBaseContext(), "Your location is: " + address, Toast.LENGTH_SHORT).show();

@@ -85,6 +85,10 @@ public class GcmMessageHandler extends IntentService {
             valueList.add(extras.getString("date" + String.valueOf(i)));
             valueList.add(extras.getString("amount" + String.valueOf(i)));
         }
+        Intent i = new Intent(getBaseContext(), TransGuardMainMenu.class);
+        i.putExtra("rName", valueList.get(0));
+        i.putExtra("rDate", valueList.get(1));
+        i.putExtra("rAmount", valueList.get(2));
 
         //valueList.add("harhar");
         TransGuardPastTransactionList.getValuesFromHandler(valueList);
