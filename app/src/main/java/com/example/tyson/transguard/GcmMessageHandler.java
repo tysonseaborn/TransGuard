@@ -8,6 +8,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GcmMessageHandler extends IntentService {
 
     String mes;
@@ -15,6 +18,10 @@ public class GcmMessageHandler extends IntentService {
     public GcmMessageHandler() {
         super("GcmMessageHandler");
     }
+
+    public ArrayList<String> valueList;
+//    private Boolean valueBool = true;
+//    private int valueCounter = 1;
 
     @Override
     public void onCreate() {
@@ -32,9 +39,19 @@ public class GcmMessageHandler extends IntentService {
         // in your BroadcastReceiver.
         String messageType = gcm.getMessageType(intent);
 
-        mes = extras.getString("title");
-        showToast();
-        Log.i("GCM", "Received : (" +messageType+")  "+extras.getString("title"));
+        for(int i = 1; i < extras.size()+1; ++i) {
+            valueList.add(extras.getString("name" + String.valueOf(i)));
+            valueList.add(extras.getString("date" + String.valueOf(i)));
+            valueList.add(extras.getString("amount" + String.valueOf(i)));
+        }
+
+        TransGuardPastTransactionList.getValuesFromHandler(valueList);
+
+        //mes = extras.getString("title");
+
+
+        //showToast();
+        //Log.i("GCM", "Received : (" +messageType+")  "+extras.getString("title"));
 
         GcmBroadcastReceiver.completeWakefulIntent(intent);
 

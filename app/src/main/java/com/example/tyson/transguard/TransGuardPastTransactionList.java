@@ -32,7 +32,9 @@ public class TransGuardPastTransactionList extends TransGuard {
     // Instantiate the parser
     XMLParser xmlParser = new XMLParser();
     //InputStream inputStream = null;
-    List<XMLParser.Entry> entries = null;
+    //List<XMLParser.Entry> entries = null;
+    List<String> entries = null;
+    static ArrayList<String> entriesList = null;
 
     AssetManager am;
     InputStream is;
@@ -45,19 +47,23 @@ public class TransGuardPastTransactionList extends TransGuard {
 
         try {
 
-            am = getBaseContext().getAssets();
-            is = am.open("xmlTestFile.xml");
-            //is = new FileInputStream("C:/Users/Tyson/Desktop/xmlTestFile.xml");
-            entries = xmlParser.parse(is);
+//            am = getBaseContext().getAssets();
+//            is = am.open("xmlTestFile.xml");
+//            //is = new FileInputStream("C:/Users/Tyson/Desktop/xmlTestFile.xml");
+//            entries = xmlParser.parse(is);
 
 
             listArray =  new ArrayList<String>();
 
-            for (XMLParser.Entry entry : entries) {
-                if(entry.date != null && !listArray.contains(getMonth(entry.date) + ' ' + getYear(entry.date))) {
-                    listArray.add(getMonth(entry.date) + ' ' + getYear(entry.date));
-                }
+            for(int i = 0; i < entriesList.size(); i+=3) {
+                listArray.add(entriesList.get(i));
             }
+
+//            for (XMLParser.Entry entry : entries) {
+//                if(entry.date != null && !listArray.contains(getMonth(entry.date) + ' ' + getYear(entry.date))) {
+//                    listArray.add(getMonth(entry.date) + ' ' + getYear(entry.date));
+//                }
+//            }
 
 //            listArray.add("August");
 //            listArray.add("September");
@@ -80,7 +86,7 @@ public class TransGuardPastTransactionList extends TransGuard {
                     int monthNumber;
                     String[] values;
 
-                    XMLParser.Entry entry = entries.get(position);
+                    //XMLParser.Entry entry = entries.get(position);
 //                    date = entry.date;
 //                    name = entry.name;
 //                    amount = entry.amount;
@@ -173,5 +179,9 @@ public class TransGuardPastTransactionList extends TransGuard {
         String newDate;
         newDate = date.substring(1, 5);
         return newDate;
+    }
+
+    public static void getValuesFromHandler(ArrayList<String> valueList) {
+        entriesList = valueList;
     }
 }

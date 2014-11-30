@@ -129,7 +129,7 @@ public class GPSService extends Service implements LocationListener {
             Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
             // Get the current location from the input parameter list
             // Create a list to contain the result address
-            List<Address> addresses = null;
+            List<Address> addresses;
             try {
 				/*
 				 * Return 1 address.

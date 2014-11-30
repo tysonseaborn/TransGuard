@@ -29,12 +29,12 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="100dp">
 
             <Button
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="150dp"
                 android:text="Check In"
                 android:id="@+id/buttonCheckIn"
                 android:textSize="22dp"
@@ -51,7 +51,7 @@
 
             <Button
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="150dp"
                 android:text="Past&#10;Transactions"
                 android:id="@+id/buttonPastTrans"
                 android:textSize="22dp"

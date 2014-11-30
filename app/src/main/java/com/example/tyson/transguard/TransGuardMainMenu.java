@@ -1,6 +1,7 @@
 package com.example.tyson.transguard;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -73,6 +74,12 @@ public class TransGuardMainMenu extends TransGuard {
         }
     }
 
+    public void confirmCheckIn() {
+        DialogFragment newFragment = new CheckInFragment();
+        newFragment.show(getFragmentManager(), "checkin");
+    }
+
+
     public void onButtonClick(View view) {
 
         GPSService mGPSService = new GPSService(getBaseContext());
@@ -85,8 +92,11 @@ public class TransGuardMainMenu extends TransGuard {
                 if (mGPSService.isLocationAvailable == false) {
 
                     // Here you can ask the user to try again, using return; for that
-                    Toast.makeText(getBaseContext(), "Your location is not available, please try again.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Your location is not available. Please make sure you have location services enabled.", Toast.LENGTH_SHORT).show();
                     //return;
+
+                    // Popup!
+                    confirmCheckIn();
 
                     // Or you can continue without getting the location, remove the return; above and uncomment the line given below
                     // address = "Location not available";
@@ -97,10 +107,10 @@ public class TransGuardMainMenu extends TransGuard {
                     double longitude = mGPSService.getLongitude();
                     Toast.makeText(getBaseContext(), "Latitude:" + latitude + " | Longitude: " + longitude, Toast.LENGTH_LONG).show();
 
-                    address = mGPSService.getLocationAddress();
+                    //address = mGPSService.getLocationAddress();
                 }
 
-                Toast.makeText(getBaseContext(), "Your location is: " + address, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getBaseContext(), "Your location is: " + address, Toast.LENGTH_SHORT).show();
 
                 // make sure you close the gps after using it. Save user's battery power
                 mGPSService.closeGPS();
@@ -116,7 +126,7 @@ public class TransGuardMainMenu extends TransGuard {
                                 .setSmallIcon(R.drawable.tg_logo_small)
                                 .setAutoCancel(true)
                                 .setContentTitle("TransGuard")
-                                .setContentText("You should check in!")
+                                .setContentText("Check in now to keep your transactions secure!")
                                 .setContentIntent(PendingIntent.getActivity(this, 0, resultIntent, 0));
                 ;
                 // Creates an explicit intent for an Activity in your app

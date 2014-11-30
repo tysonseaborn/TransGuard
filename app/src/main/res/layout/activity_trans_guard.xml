@@ -11,19 +11,17 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="match_parent">
 
         <ImageView
             android:layout_width="fill_parent"
-            android:layout_height="75dp"
+            android:layout_height="150dp"
             android:id="@+id/imageViewMainMenu"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:background="@drawable/tg_banner"
             android:alpha="100"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="50dp" />
+            android:layout_gravity="center_horizontal" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -56,10 +54,10 @@
             android:textStyle="italic" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginTop="100dp">
+            android:layout_height="100dp"
+            android:layout_marginTop="75dp"
+            android:orientation="vertical">
 
             <Button
                 android:layout_width="fill_parent"
@@ -76,12 +74,12 @@
                 android:textColor="#FFFFFF"
                 android:typeface="serif"
                 android:background="@drawable/buttonshape"
-                android:layout_gravity="center_horizontal"
                 android:shadowColor="#000000"
                 android:shadowDx="5"
                 android:shadowDy="5"
-                android:shadowRadius="25"/>
+                android:shadowRadius="25" />
         </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>
