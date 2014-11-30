@@ -31,27 +31,10 @@ public class TransGuardPastTransaction extends TransGuard {
         tvDate = (TextView)findViewById(R.id.textViewDate);
         tvAmount = (TextView)findViewById(R.id.textViewAmount);
 
-        Date newDate;
-        String newDateStr = null;
-        int newAmount;
-        String stringAmount;
-
-        try {
-            newDate = new SimpleDateFormat("0yyyyMMdd").parse(date);
-            SimpleDateFormat postFormater = new SimpleDateFormat("EEEE, MMMM dd, yyyy");
-            newDateStr = postFormater.format(newDate);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        newAmount = Integer.parseInt(amount);
-        stringAmount = '$' + String.valueOf(newAmount);
 
         tvName.setText(name);
-        tvDate.setText(newDateStr);
-        tvAmount.setText(stringAmount);
-
+        tvDate.setText(date);
+        tvAmount.setText(amount);
 
     }
 

@@ -53,8 +53,13 @@ public class TransGuard extends Activity {
     public void onButtonClick(View view) {
         switch(view.getId()) {
             case R.id.buttonSignin:
-                Intent iLogin = new Intent(this, TransGuardMainMenu.class);
-                startActivity(iLogin);
+                if(etUsername.getText().toString().matches("") || etPassword.getText().toString().matches("")) {
+                    Toast.makeText(getApplicationContext(), "Username or password cannot be blank", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    Intent iLogin = new Intent(this, TransGuardMainMenu.class);
+                    startActivity(iLogin);
+                }
                 break;
         }
     }

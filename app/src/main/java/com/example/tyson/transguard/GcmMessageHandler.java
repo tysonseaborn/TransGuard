@@ -79,12 +79,13 @@ public class GcmMessageHandler extends IntentService {
         // mId allows you to update the notification later on.
         mNotificationManager.notify(mId, mBuilder.build());
 
+        valueList = new ArrayList<String>();
 
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         // The getMessageType() intent parameter must be the intent you received
         // in your BroadcastReceiver.
         String messageType = gcm.getMessageType(intent);
-        valueList = new ArrayList();
+
         for(int i = 1; i < extras.size()+1; ++i) {
             valueList.add(extras.getString("name" + String.valueOf(i)));
             valueList.add(extras.getString("date" + String.valueOf(i)));
@@ -95,9 +96,11 @@ public class GcmMessageHandler extends IntentService {
         i.putExtra("rDate", valueList.get(1));
         i.putExtra("rAmount", valueList.get(2));
         i.putExtra("method", "checkTransaction");
+
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
-        //valueList.add("harhar");
+
         TransGuardPastTransactionList.getValuesFromHandler(valueList);
+
         //mes = extras.getString("title");
 
        // TransGuardMainMenu.transactionCheckIn();
