@@ -33,18 +33,23 @@ public class GcmMessageHandler extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
-
+        valueList = new ArrayList();
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         // The getMessageType() intent parameter must be the intent you received
         // in your BroadcastReceiver.
         String messageType = gcm.getMessageType(intent);
 
-        for(int i = 1; i < extras.size()+1; ++i) {
-            valueList.add(extras.getString("name" + String.valueOf(i)));
-            valueList.add(extras.getString("date" + String.valueOf(i)));
-            valueList.add(extras.getString("amount" + String.valueOf(i)));
-        }
+        try {
 
+
+        for(int i = 1; i < extras.size()+1; ++i) {
+            valueList.add(extras.getString(("name" + Integer.toString(i))));
+            valueList.add(extras.getString(("date" + Integer.toString(i))));
+            valueList.add(extras.getString(("amount" + Integer.toString(i))));
+        }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         TransGuardPastTransactionList.getValuesFromHandler(valueList);
 
         //mes = extras.getString("title");
