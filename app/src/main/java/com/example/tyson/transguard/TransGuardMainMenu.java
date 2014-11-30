@@ -16,20 +16,32 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class TransGuardMainMenu extends TransGuard {
-    //GoogleCloudMessaging gcm;
-    String regID;
-    String PROJECT_NUMBER = "492813484993";
     GoogleCloudMessaging gcm;
+    String apiKey = "AIzaSyBWfKLPBvX8P4tm2sI4bKiT4LA2XUyejp4";
+    public String regID;
+    String PROJECT_NUMBER = "492813484993";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trans_guard_main_menu);
         getRegId();
+
+        Content content = createContent();
+        content.createRegID(regID);
+        post(apiKey, content);
     }
 
 
@@ -138,6 +150,10 @@ public class TransGuardMainMenu extends TransGuard {
         }
     }
 
+    public void setRegID(String id) {
+        regID = id;
+    }
+
     public void getRegId(){
         new AsyncTask<Void, Void, String>() {
             @Override
@@ -147,6 +163,7 @@ public class TransGuardMainMenu extends TransGuard {
                     if (gcm == null) {
                         gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
                     }
+
                     regID = gcm.register(PROJECT_NUMBER);
                     msg = "Device registered, registration ID=" + regID;
                     Log.i("GCM", msg);
@@ -155,14 +172,94 @@ public class TransGuardMainMenu extends TransGuard {
                     msg = "Error :" + ex.getMessage();
 
                 }
-                return msg;
+                return regID;
             }
 
             @Override
-            protected void onPostExecute(String msg) {
+            protected void onPostExecute(String regID) {
                 //etRegId.setText(msg + "\n");
-                Toast.makeText(getBaseContext(), msg, Toast.LENGTH_LONG);
+                Toast.makeText(getBaseContext(), "Device registered, registration ID=" + regID, Toast.LENGTH_LONG);
+                setRegID(regID);
             }
         }.execute(null, null, null);
+    }
+
+    public static void post(final String apiKey, final Content content) {
+
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                try {
+
+                    // 1. URL
+                    URL url = new URL("https://android.googleapis.com/gcm/send");
+
+                    // 2. Open connection
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                    // 3. Specify POST method
+                    conn.setRequestMethod("POST");
+
+                    // 4. Set the headers
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setRequestProperty("Authorization", "key=" + apiKey);
+
+                    conn.setDoOutput(true);
+
+                    // 5. Add JSON data into POST request body
+
+
+                    //`5.1 Use Jackson object mapper to convert Contnet object into JSON
+                    ObjectMapper mapper = new ObjectMapper();
+
+                    // 5.2 Get connection output stream
+                    DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+
+                    // 5.3 Copy Content "JSON" into
+                    mapper.writeValue(wr, content);
+
+
+                    // 5.4 Send the request
+                    wr.flush();
+
+                    // 5.5 close
+                    wr.close();
+                    // 6. Get the response
+                    int responseCode = conn.getResponseCode();
+                    Log.i("CONNECTION:", "\nSending 'POST' request to URL : " + url);
+                    Log.i("CONNECTION:", "Response Code : " + responseCode);
+
+                    BufferedReader in = new BufferedReader(
+                            new InputStreamReader(conn.getInputStream()));
+                    String inputLine;
+                    StringBuffer response = new StringBuffer();
+
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+
+                    // 7. Print result
+                    Log.i("RESPONSE:", response.toString());
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }.execute(null, null, null);
+    }
+
+    //content for the android server
+    public static Content createContent(){
+
+        Content c = new Content();
+
+        c.addRegId("APA91bE7pkJ82PfXhhGWG8zWl5Cl9g0nhLwGmZL0sqJED-SaXYWLmnldbPaUZ90BPEZdquVOknPxvkh5DWkCOfGySCp-hlURrOWst5icMlgnHd-kwWeWlvMd1vnvIddnyX8Q-wKf-Mqub6u_d-BXUyOVr3luIkSZDkwZKdROHGiNwfu57xTwuiM");
+        c.createData("Test Title", "Test Message");
+
+        return c;
     }
 }

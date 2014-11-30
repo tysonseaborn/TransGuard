@@ -22,6 +22,7 @@ public class GcmMessageHandler extends IntentService {
         super.onCreate();
         handler = new Handler();
     }
+
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
