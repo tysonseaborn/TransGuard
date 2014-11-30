@@ -27,22 +27,26 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 public class TransGuardMainMenu extends TransGuard {
     GoogleCloudMessaging gcm;
     String apiKey = "AIzaSyBWfKLPBvX8P4tm2sI4bKiT4LA2XUyejp4";
-    public String regID;
+    public static String regID;
     String PROJECT_NUMBER = "492813484993";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trans_guard_main_menu);
-        getRegId();
+        try {
+            getRegId();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        Content content = createContent();
-        content.createRegID(regID);
-        post(apiKey, content);
     }
 
 
@@ -160,11 +164,7 @@ public class TransGuardMainMenu extends TransGuard {
         }
     }
 
-    public void setRegID(String id) {
-        regID = id;
-    }
-
-    public void getRegId(){
+    public void getRegId() throws ExecutionException, InterruptedException {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
@@ -188,8 +188,12 @@ public class TransGuardMainMenu extends TransGuard {
             @Override
             protected void onPostExecute(String regID) {
                 //etRegId.setText(msg + "\n");
+                Log.i("REGID", "Device registered, registration ID=" + regID);
                 Toast.makeText(getBaseContext(), "Device registered, registration ID=" + regID, Toast.LENGTH_LONG);
-                setRegID(regID);
+                Content content = createContent();
+                content.createRegID(regID);
+                post(apiKey, content);
+
             }
         }.execute(null, null, null);
     }
