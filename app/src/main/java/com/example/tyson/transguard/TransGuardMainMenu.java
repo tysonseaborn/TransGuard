@@ -2,15 +2,20 @@ package com.example.tyson.transguard;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,9 +56,7 @@ public class TransGuardMainMenu extends TransGuard {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -108,7 +111,6 @@ public class TransGuardMainMenu extends TransGuard {
                     // Here you can ask the user to try again, using return; for that
                     Toast.makeText(getBaseContext(), "Your location is not available. Please make sure you have location services enabled.", Toast.LENGTH_SHORT).show();
                     //return;
-                    transactionCheckIn();
                     if (isTrans = true) {
                         // Popup!
                         confirmCheckIn();
@@ -118,7 +120,6 @@ public class TransGuardMainMenu extends TransGuard {
                     // Or you can continue without getting the location, remove the return; above and uncomment the line given below
                     // address = "Location not available";
                 } else {
-                    transactionCheckIn();
                     if (isTrans = true) {
                         // Getting location co-ordinates
                         double latitude = mGPSService.getLatitude();
@@ -188,7 +189,6 @@ public class TransGuardMainMenu extends TransGuard {
             @Override
             protected String doInBackground(Void... params) {
                 try {
-
                     // 1. URL
                     URL url = new URL("https://android.googleapis.com/gcm/send");
 
@@ -255,9 +255,39 @@ public class TransGuardMainMenu extends TransGuard {
 
         Content c = new Content();
 
-        c.addRegId("APA91bE7pkJ82PfXhhGWG8zWl5Cl9g0nhLwGmZL0sqJED-SaXYWLmnldbPaUZ90BPEZdquVOknPxvkh5DWkCOfGySCp-hlURrOWst5icMlgnHd-kwWeWlvMd1vnvIddnyX8Q-wKf-Mqub6u_d-BXUyOVr3luIkSZDkwZKdROHGiNwfu57xTwuiM");
+        c.addRegId("APA91bH1iDguy9N2kC0vxz669tkuItTW32FFl8avoaM7_7IbhIq6ql-Z7_8hZIdZ66r75ovaxUYbwzbaVtv1eGxDdvyRhgoj8zVOrak6DV6Sj1tUUM9QvztM2L-vc6yFONj-blKJn5TmQQNdy8_kl6uvaKvOhtx-b7jIgmaWoXf26zAHQavxe1U");
         c.createData("Test Title", "Test Message");
 
         return c;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Register mMessageReceiver to receive messages.
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter("trans"));
+    }
+
+    // handler for received Intents for the "my-event" event
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Extract data included in the Intent
+            rName = intent.getStringExtra("rName");
+            rDate = intent.getStringExtra("rDate");
+            rAmount = intent.getStringExtra("rAmount");
+            if (intent.getStringExtra("method").equals("checkTransaction")) {
+                transactionCheckIn();
+            }
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        // Unregister since the activity is not visible
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        super.onPause();
     }
 }

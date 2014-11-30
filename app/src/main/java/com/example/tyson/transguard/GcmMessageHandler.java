@@ -1,6 +1,9 @@
 package com.example.tyson.transguard;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -10,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -75,26 +79,28 @@ public class GcmMessageHandler extends IntentService {
         // mId allows you to update the notification later on.
         mNotificationManager.notify(mId, mBuilder.build());
 
+
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         // The getMessageType() intent parameter must be the intent you received
         // in your BroadcastReceiver.
         String messageType = gcm.getMessageType(intent);
-
+        valueList = new ArrayList();
         for(int i = 1; i < extras.size()+1; ++i) {
             valueList.add(extras.getString("name" + String.valueOf(i)));
             valueList.add(extras.getString("date" + String.valueOf(i)));
             valueList.add(extras.getString("amount" + String.valueOf(i)));
         }
-        Intent i = new Intent(getBaseContext(), TransGuardMainMenu.class);
+        Intent i = new Intent("trans");
         i.putExtra("rName", valueList.get(0));
         i.putExtra("rDate", valueList.get(1));
         i.putExtra("rAmount", valueList.get(2));
-
+        i.putExtra("method", "checkTransaction");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(i);
         //valueList.add("harhar");
         TransGuardPastTransactionList.getValuesFromHandler(valueList);
-
         //mes = extras.getString("title");
 
+       // TransGuardMainMenu.transactionCheckIn();
 
         //showToast();
         //Log.i("GCM", "Received : (" +messageType+")  "+extras.getString("title"));
