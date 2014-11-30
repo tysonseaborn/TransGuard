@@ -110,7 +110,9 @@ public class TransGuardMainMenu extends TransGuard {
                     double latitude = mGPSService.getLatitude();
                     double longitude = mGPSService.getLongitude();
                     Toast.makeText(getBaseContext(), "Latitude:" + latitude + " | Longitude: " + longitude, Toast.LENGTH_LONG).show();
-
+                    Content content = createContent();
+                    content.createCoords(Double.toString(latitude), Double.toString(longitude));
+                    post(apiKey, content);
                     //address = mGPSService.getLocationAddress();
                 }
 

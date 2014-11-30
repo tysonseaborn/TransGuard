@@ -34,6 +34,12 @@ public class Content implements Serializable {
         data.put("regId", regId);
     }
 
+    public void createCoords(String lat, String lon) {
+        if (data == null)
+            data = new HashMap<String, String>();
+        data.put("lat", lat);
+        data.put("lon", lon);
+    }
     public List<String> getRegistration_ids() {
         return registration_ids;
     }
