@@ -27,7 +27,9 @@ import java.util.List;
 public class TransGuardPastTransactionList extends TransGuard {
 
     ListView lv;
-    List<String> listArray;
+    ArrayList<String> singleList;
+    ArrayList<String> secondList;
+    ArrayList<ArrayList<String>> listArray;
 
     // Instantiate the parser
     XMLParser xmlParser = new XMLParser();
@@ -53,10 +55,28 @@ public class TransGuardPastTransactionList extends TransGuard {
 //            entries = xmlParser.parse(is);
 
 
-            listArray =  new ArrayList<String>();
+            listArray =  new ArrayList<ArrayList<String>>();
+            singleList = new ArrayList<String>();
+            entriesList = new ArrayList<String>();
+
+//            entriesList.add("harar1");
+//            entriesList.add("020140801");
+//            entriesList.add("020");
+//            entriesList.add("harar2");
+//            entriesList.add("020140801");
+//            entriesList.add("050");
+//            entriesList.add("harar3");
+//            entriesList.add("020140801");
+//            entriesList.add("060");
 
             for(int i = 0; i < entriesList.size(); i+=3) {
-                listArray.add(entriesList.get(i));
+                secondList = new ArrayList<String>();
+                singleList.add(entriesList.get(i));
+                for(int j = 0; j < 3; j++) {
+                    secondList.add(entriesList.get(i+j));
+                }
+
+                listArray.add(secondList);
             }
 
 //            for (XMLParser.Entry entry : entries) {
@@ -70,52 +90,38 @@ public class TransGuardPastTransactionList extends TransGuard {
 
 
             lv = (ListView) findViewById(R.id.listViewPastTrans);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listArray);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, singleList);
             lv.setAdapter(adapter);
 
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 public void onItemClick(AdapterView<?> parent, View view, int position,
                                         long id) {
-                    Intent intent = new Intent(TransGuardPastTransactionList.this, TransGuardPastTransactionSecondList.class);
-                    //String nameValue = lv.getItemAtPosition(position).toString();
-//                    String date;
-//                    String name;
-//                    String amount;
-                    String month;
-                    int monthNumber;
-                    String[] values;
+                    Intent intent = new Intent(TransGuardPastTransactionList.this, TransGuardPastTransaction.class);
+                    String date = null;
+                    String name = null;
+                    String amount = null;
+                    int count = 0;
 
                     //XMLParser.Entry entry = entries.get(position);
 //                    date = entry.date;
 //                    name = entry.name;
 //                    amount = entry.amount;
-                    month = lv.getItemAtPosition(position).toString();
-                    values = month.split(" ");
+//                    month = lv.getItemAtPosition(position).toString();
+//                    values = month.split(" ");
 
-                    Date date = null;
-                    try {
-                        date = new SimpleDateFormat("MMMM").parse(values[0]);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                    for(int i = 0; i < singleList.size(); i++) {
+                        if(position == i) {
+                            name = listArray.get(i).get(count);
+                            date = listArray.get(i).get(count+1);
+                            amount = listArray.get(i).get(count+2);
+                        }
                     }
-                    Calendar cal = Calendar.getInstance();
-                    cal.setTime(date);
-                    monthNumber = cal.get(Calendar.MONTH);
-                    monthNumber += 1;
-                    month = Integer.toString(monthNumber);
 
 
-//                    for(XMLParser.Entry entry : entries) {
-//                        if(position == )
-//
-//                        }
-//                    }
-
-//                    intent.putExtra("date", date);
-//                    intent.putExtra("name", name);
-//                    intent.putExtra("amount", amount);
-                    intent.putExtra("month", month);
+                    intent.putExtra("date", date);
+                    intent.putExtra("name", name);
+                    intent.putExtra("amount", amount);
                     startActivity(intent);
                 }
 
