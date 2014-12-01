@@ -228,7 +228,7 @@ public class TransGuardMainMenu extends TransGuard {
 
         Content c = new Content();
 
-        c.addRegId("APA91bE7pkJ82PfXhhGWG8zWl5Cl9g0nhLwGmZL0sqJED-SaXYWLmnldbPaUZ90BPEZdquVOknPxvkh5DWkCOfGySCp-hlURrOWst5icMlgnHd-kwWeWlvMd1vnvIddnyX8Q-wKf-Mqub6u_d-BXUyOVr3luIkSZDkwZKdROHGiNwfu57xTwuiM");
+        c.addRegId("APA91bEZn9zCQGNYko7JKSBETYojO57ErEQWUV-14sAvU49IuOhCqhpcCVQtzS4GKZdLdmindSOMws_F6dUqr3eoPiA1vqMT9CHOluCwZu8eWvetQZ08AzYoQOcvPbjVTQ-2nprA6nnh97pH-979VgwvXfzNo1EQ_0FrVOqtjI7E3cImMHtQqW4");
         c.createData("Test Title", "Test Message");
 
         return c;

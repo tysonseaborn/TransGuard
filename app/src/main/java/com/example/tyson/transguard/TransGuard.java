@@ -1,7 +1,10 @@
 package com.example.tyson.transguard;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +15,8 @@ import android.widget.Toast;
 
 public class TransGuard extends Activity {
 
+    NetworkInfo mWifi;
+
     EditText etUsername, etPassword;
 
     @Override
@@ -20,6 +25,10 @@ public class TransGuard extends Activity {
         setContentView(R.layout.activity_trans_guard);
         etUsername = (EditText)findViewById(R.id.usernameInput);
         etPassword = (EditText)findViewById(R.id.passwordInput);
+
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
     }
 
 
@@ -55,6 +64,9 @@ public class TransGuard extends Activity {
             case R.id.buttonSignin:
                 if(etUsername.getText().toString().matches("") || etPassword.getText().toString().matches("")) {
                     Toast.makeText(getApplicationContext(), "Username or password cannot be blank", Toast.LENGTH_SHORT).show();
+                    return;
+                }else if(!mWifi.isConnected()) {
+                    Toast.makeText(getApplicationContext(), "Application needs a wifi network connection", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
                     Intent iLogin = new Intent(this, TransGuardMainMenu.class);
