@@ -115,12 +115,12 @@ public class TransGuardMainMenu extends TransGuard {
                         // Getting location co-ordinates
                         double latitude = mGPSService.getLatitude();
                         double longitude = mGPSService.getLongitude();
-                        Toast.makeText(getBaseContext(), "Latitude:" + latitude + " | Longitude: " + longitude, Toast.LENGTH_LONG).show();
                         Content content = createContent();
                         content.createCoords(Double.toString(latitude), Double.toString(longitude));
                         post(apiKey, content);
                         isTrans = false;
                         checkinButton.setVisibility(View.INVISIBLE);
+                        Toast.makeText(getBaseContext(), "Transaction and Location Verified!", Toast.LENGTH_LONG);
                     }
                 }
                 mGPSService.closeGPS();
