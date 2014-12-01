@@ -47,7 +47,8 @@
                 android:shadowColor="#000000"
                 android:shadowDx="5"
                 android:shadowDy="5"
-                android:shadowRadius="25"/>
+                android:shadowRadius="25"
+                android:visibility="invisible" />
 
             <Button
                 android:layout_width="fill_parent"

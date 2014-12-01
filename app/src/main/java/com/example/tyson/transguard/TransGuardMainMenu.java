@@ -1,25 +1,18 @@
 package com.example.tyson.transguard;
 
-import android.app.Activity;
 import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,6 +32,7 @@ public class TransGuardMainMenu extends TransGuard {
     String apiKey = "AIzaSyBWfKLPBvX8P4tm2sI4bKiT4LA2XUyejp4";
     public static String regID;
     String PROJECT_NUMBER = "492813484993";
+    public static Button checkinButton;
 
     public static String rName;
     public static String rDate;
@@ -49,6 +43,8 @@ public class TransGuardMainMenu extends TransGuard {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trans_guard_main_menu);
+
+        checkinButton = (Button)findViewById(R.id.buttonCheckIn);
         try {
             getRegId();
         } catch (ExecutionException e) {
@@ -130,6 +126,7 @@ public class TransGuardMainMenu extends TransGuard {
                         post(apiKey, content);
                         //address = mGPSService.getLocationAddress();
                         isTrans = false;
+                        checkinButton.setVisibility(View.INVISIBLE);
                     }
                 }
 
@@ -255,7 +252,7 @@ public class TransGuardMainMenu extends TransGuard {
 
         Content c = new Content();
 
-        c.addRegId("APA91bH1iDguy9N2kC0vxz669tkuItTW32FFl8avoaM7_7IbhIq6ql-Z7_8hZIdZ66r75ovaxUYbwzbaVtv1eGxDdvyRhgoj8zVOrak6DV6Sj1tUUM9QvztM2L-vc6yFONj-blKJn5TmQQNdy8_kl6uvaKvOhtx-b7jIgmaWoXf26zAHQavxe1U");
+        c.addRegId("APA91bE7pkJ82PfXhhGWG8zWl5Cl9g0nhLwGmZL0sqJED-SaXYWLmnldbPaUZ90BPEZdquVOknPxvkh5DWkCOfGySCp-hlURrOWst5icMlgnHd-kwWeWlvMd1vnvIddnyX8Q-wKf-Mqub6u_d-BXUyOVr3luIkSZDkwZKdROHGiNwfu57xTwuiM");
         c.createData("Test Title", "Test Message");
 
         return c;
