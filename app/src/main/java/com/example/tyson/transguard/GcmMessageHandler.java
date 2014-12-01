@@ -85,8 +85,8 @@ public class GcmMessageHandler extends IntentService {
         // The getMessageType() intent parameter must be the intent you received
         // in your BroadcastReceiver.
         String messageType = gcm.getMessageType(intent);
-
-        for(int i = 1; i < extras.size()+1; ++i) {
+        int size = Integer.parseInt(extras.getString("transactionSize"));
+        for(int i = 1; i < size; ++i) {
             valueList.add(extras.getString("name" + String.valueOf(i)));
             valueList.add(extras.getString("date" + String.valueOf(i)));
             valueList.add(extras.getString("amount" + String.valueOf(i)));

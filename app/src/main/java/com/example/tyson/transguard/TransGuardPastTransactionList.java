@@ -38,9 +38,6 @@ public class TransGuardPastTransactionList extends TransGuard {
     List<String> entries = null;
     static ArrayList<String> entriesList = null;
 
-    AssetManager am;
-    InputStream is;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +54,12 @@ public class TransGuardPastTransactionList extends TransGuard {
 
             listArray =  new ArrayList<ArrayList<String>>();
             singleList = new ArrayList<String>();
-            entriesList = new ArrayList<String>();
-
+//            entriesList = new ArrayList<String>();
+//
 //            entriesList.add("harar1");
 //            entriesList.add("020140801");
 //            entriesList.add("020");
-//            entriesList.add("harar2");
+//            entriesList.add("harar1");
 //            entriesList.add("020140801");
 //            entriesList.add("050");
 //            entriesList.add("harar3");
@@ -131,16 +128,6 @@ public class TransGuardPastTransactionList extends TransGuard {
 
             // if any I/O error occurs
             e.printStackTrace();
-        }finally{
-
-            // releases system resources associated with this stream
-            if(is != null) {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 
