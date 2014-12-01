@@ -1,8 +1,6 @@
 package com.example.tyson.transguard;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,19 +8,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.DateFormatSymbols;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-
 
 public class TransGuardPastTransactionList extends TransGuard {
 
@@ -33,8 +20,6 @@ public class TransGuardPastTransactionList extends TransGuard {
 
     // Instantiate the parser
     XMLParser xmlParser = new XMLParser();
-    //InputStream inputStream = null;
-    //List<XMLParser.Entry> entries = null;
     List<String> entries = null;
     static ArrayList<String> entriesList = null;
 
@@ -46,25 +31,8 @@ public class TransGuardPastTransactionList extends TransGuard {
 
         try {
 
-//            am = getBaseContext().getAssets();
-//            is = am.open("xmlTestFile.xml");
-//            //is = new FileInputStream("C:/Users/Tyson/Desktop/xmlTestFile.xml");
-//            entries = xmlParser.parse(is);
-
-
             listArray =  new ArrayList<ArrayList<String>>();
             singleList = new ArrayList<String>();
-//            entriesList = new ArrayList<String>();
-//
-//            entriesList.add("harar1");
-//            entriesList.add("020140801");
-//            entriesList.add("020");
-//            entriesList.add("harar1");
-//            entriesList.add("020140801");
-//            entriesList.add("050");
-//            entriesList.add("harar3");
-//            entriesList.add("020140801");
-//            entriesList.add("060");
 
             for(int i = 0; i < entriesList.size(); i+=3) {
                 secondList = new ArrayList<String>();
@@ -75,16 +43,6 @@ public class TransGuardPastTransactionList extends TransGuard {
 
                 listArray.add(secondList);
             }
-
-//            for (XMLParser.Entry entry : entries) {
-//                if(entry.date != null && !listArray.contains(getMonth(entry.date) + ' ' + getYear(entry.date))) {
-//                    listArray.add(getMonth(entry.date) + ' ' + getYear(entry.date));
-//                }
-//            }
-
-//            listArray.add("August");
-//            listArray.add("September");
-
 
             lv = (ListView) findViewById(R.id.listViewPastTrans);
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, singleList);
@@ -100,13 +58,6 @@ public class TransGuardPastTransactionList extends TransGuard {
                     String amount = null;
                     int count = 0;
 
-                    //XMLParser.Entry entry = entries.get(position);
-//                    date = entry.date;
-//                    name = entry.name;
-//                    amount = entry.amount;
-//                    month = lv.getItemAtPosition(position).toString();
-//                    values = month.split(" ");
-
                     for(int i = 0; i < singleList.size(); i++) {
                         if(position == i) {
                             name = listArray.get(i).get(count);
@@ -115,17 +66,13 @@ public class TransGuardPastTransactionList extends TransGuard {
                         }
                     }
 
-
                     intent.putExtra("date", date);
                     intent.putExtra("name", name);
                     intent.putExtra("amount", amount);
                     startActivity(intent);
                 }
-
             });
-
         }catch(Exception e){
-
             // if any I/O error occurs
             e.printStackTrace();
         }
@@ -158,20 +105,6 @@ public class TransGuardPastTransactionList extends TransGuard {
             Intent about = new Intent(this, About.class);
             startActivity(about);
         }
-    }
-
-    public String getMonth(String date){
-        int month;
-        String newDate;
-        newDate = date.substring(5, 7);
-        month = Integer.parseInt(newDate);
-        return new DateFormatSymbols().getMonths()[month-1];
-    }
-
-    public String getYear(String date) {
-        String newDate;
-        newDate = date.substring(1, 5);
-        return newDate;
     }
 
     public static void getValuesFromHandler(ArrayList<String> valueList) {

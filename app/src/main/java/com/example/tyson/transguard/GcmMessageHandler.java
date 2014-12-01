@@ -22,15 +22,12 @@ import java.util.List;
 
 public class GcmMessageHandler extends IntentService {
 
-    String mes;
     private Handler handler;
     public GcmMessageHandler() {
         super("GcmMessageHandler");
     }
 
     public ArrayList<String> valueList;
-//    private Boolean valueBool = true;
-//    private int valueCounter = 1;
 
     @Override
     public void onCreate() {
@@ -57,16 +54,9 @@ public class GcmMessageHandler extends IntentService {
                         .setContentText("Check in now to keep your transactions secure!")
                         .setContentIntent(PendingIntent.getActivity(this, 0, resultIntent, 0));
         ;
-        // Creates an explicit intent for an Activity in your app
 
-        // The stack builder object will contain an artificial back stack for the
-        // started Activity.
-        // This ensures that navigating backward from the Activity leads out of
-        // your application to the Home screen.
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        // Adds the back stack for the Intent (but not the Intent itself)
         stackBuilder.addParentStack(TransGuard.class);
-        // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(resultIntent);
 
         PendingIntent resultPendingIntent =
@@ -84,7 +74,6 @@ public class GcmMessageHandler extends IntentService {
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         // The getMessageType() intent parameter must be the intent you received
         // in your BroadcastReceiver.
-        String messageType = gcm.getMessageType(intent);
         int size = Integer.parseInt(extras.getString("transactionSize"));
         for(int i = 1; i < size; ++i) {
             valueList.add(extras.getString("name" + String.valueOf(i)));
@@ -98,25 +87,8 @@ public class GcmMessageHandler extends IntentService {
         i.putExtra("method", "checkTransaction");
 
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
-
         TransGuardPastTransactionList.getValuesFromHandler(valueList);
-
-        //mes = extras.getString("title");
-
-       // TransGuardMainMenu.transactionCheckIn();
-
-        //showToast();
-        //Log.i("GCM", "Received : (" +messageType+")  "+extras.getString("title"));
-
         GcmBroadcastReceiver.completeWakefulIntent(intent);
 
-    }
-
-    public void showToast(){
-        handler.post(new Runnable() {
-            public void run() {
-                Toast.makeText(getApplicationContext(),mes , Toast.LENGTH_LONG).show();
-            }
-        });
     }
 }

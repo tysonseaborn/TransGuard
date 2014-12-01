@@ -34,6 +34,7 @@ public class TransGuardMainMenu extends TransGuard {
     String PROJECT_NUMBER = "492813484993";
     public static Button checkinButton;
 
+    //Required for displaying the latest incoming transaction
     public static String rName;
     public static String rDate;
     public static String rAmount;
@@ -97,24 +98,18 @@ public class TransGuardMainMenu extends TransGuard {
 
         GPSService mGPSService = new GPSService(getBaseContext());
         mGPSService.getLocation();
-        String address = "";
 
         switch(view.getId()) {
             case R.id.buttonCheckIn:
 
                 if (mGPSService.isLocationAvailable == false) {
-
-                    // Here you can ask the user to try again, using return; for that
                     Toast.makeText(getBaseContext(), "Your location is not available. Please make sure you have location services enabled.", Toast.LENGTH_SHORT).show();
-                    //return;
+
                     if (isTrans = true) {
                         // Popup!
                         confirmCheckIn();
                         isTrans = false;
                     }
-
-                    // Or you can continue without getting the location, remove the return; above and uncomment the line given below
-                    // address = "Location not available";
                 } else {
                     if (isTrans = true) {
                         // Getting location co-ordinates
@@ -124,19 +119,11 @@ public class TransGuardMainMenu extends TransGuard {
                         Content content = createContent();
                         content.createCoords(Double.toString(latitude), Double.toString(longitude));
                         post(apiKey, content);
-                        //address = mGPSService.getLocationAddress();
                         isTrans = false;
                         checkinButton.setVisibility(View.INVISIBLE);
                     }
                 }
-
-                //Toast.makeText(getBaseContext(), "Your location is: " + address, Toast.LENGTH_SHORT).show();
-
-                // make sure you close the gps after using it. Save user's battery power
                 mGPSService.closeGPS();
-
-
-
                 break;
 
             case R.id.buttonPastTrans:
@@ -161,8 +148,7 @@ public class TransGuardMainMenu extends TransGuard {
                     Log.i("GCM", msg);
 
                 } catch (IOException ex) {
-                    msg = "Error :" + ex.getMessage();
-
+                    Log.i("Error: ", ex.getMessage());
                 }
                 return regID;
             }
@@ -201,25 +187,16 @@ public class TransGuardMainMenu extends TransGuard {
 
                     conn.setDoOutput(true);
 
-                    // 5. Add JSON data into POST request body
-
-
-                    //`5.1 Use Jackson object mapper to convert Contnet object into JSON
+                    //Use Jackson to create a JSON object
                     ObjectMapper mapper = new ObjectMapper();
-
-                    // 5.2 Get connection output stream
                     DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-
-                    // 5.3 Copy Content "JSON" into
+                    // Copy JSON
                     mapper.writeValue(wr, content);
-
-
-                    // 5.4 Send the request
+                    //Send the request
                     wr.flush();
-
-                    // 5.5 close
                     wr.close();
-                    // 6. Get the response
+
+                    // Get response code
                     int responseCode = conn.getResponseCode();
                     Log.i("CONNECTION:", "\nSending 'POST' request to URL : " + url);
                     Log.i("CONNECTION:", "Response Code : " + responseCode);
@@ -234,7 +211,6 @@ public class TransGuardMainMenu extends TransGuard {
                     }
                     in.close();
 
-                    // 7. Print result
                     Log.i("RESPONSE:", response.toString());
 
                 } catch (MalformedURLException e) {
@@ -258,6 +234,7 @@ public class TransGuardMainMenu extends TransGuard {
         return c;
     }
 
+    //Broadcast logic in order to get Intent values from GCM
     @Override
     public void onResume() {
         super.onResume();
